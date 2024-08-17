@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Formatter</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eceff1;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 1200px;
+      background: #ffffff;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 30px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid #ddd;
+      display: flex;
+    }
+
+    .textarea-container {
+      width: 100%;
+      margin-bottom: 20px;
+      position: relative;
+      display: flex;
+      /* Space between input and output */
+    }
+
+    textarea {
+      width: 40%;
+      height: 300px;
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+      transition: box-shadow 0.3s ease;
+      font-size: 16px;
+      line-height: 1.5;
+      float: left;
+    }
+
+    textarea:focus {
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+      outline: none;
+    }
+
+    #output {
+      top: 0;
+      width: 40%;
+      height: 300px;
+      background-color: #f7f9fa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      margin-left: 10vw;
+      animation: fadeIn 1s;
+      overflow: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      /* position: absolute; */
+
+    }
+
+    .toggle-btn {
+      display: block;
+      margin: 20px auto;
+      background-color: #2ecc71;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #27ae60;
+      transform: translateY(-4px);
+    }
+
+    .toggle-btn:active {
+      transform: translateY(0);
+    }
+
+    button {
+      background-color: #3498db;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      margin: 6px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+      /* Initially hide all buttons */
+    }
+
+    button.show {
+      display: inline-block;
+      /* Class to show the button */
+    }
+
+    button:hover {
+      background-color: #2980b9;
+      transform: translateY(-4px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+              <div class="textarea-container">
+                       <textarea id="input-text" placeholder="Enter your text here..."></textarea>
+                      <div id="output" class="output-box"></div>
+              </div>
+              <div class="butons">
+                <button class="toggle-btn" onclick="toggleOptions()">Format Options</button>
+                <button class="btn" onclick="updateCount()">Count Characters</button>
+                <button class="btn" onclick="countWords()">Count Words</button>
+                <button class="btn" onclick="countSentences()">Count Sentences</button>
+                <button class="btn" onclick="countParagraphs()">Count Paragraphs</button>
+                <button class="btn" onclick="analyzeFrequency()">Character Frequency Analysis</button>
+                <button class="btn" onclick="convertToUppercase()">Convert to Uppercase</button>
+                <button class="btn" onclick="convertToLowercase()">Convert to Lowercase</button>
+                <button class="btn" onclick="reverseText()">Reverse Text</button>
+                <button class="btn" onclick="sortAlphabetically()">Sort Alphabetically</button>
+                <button class="btn" onclick="highlightVowels()">Highlight Vowels</button>
+                <button class="btn" onclick="removeExtraSpaces()">Remove Extra Spaces</button>
+                <button class="btn" onclick="convertToTitleCase()">Convert to Title Case</button>
+                <button class="btn" onclick="removeVowels()">Remove Vowels</button>
+                <button class="btn" onclick="reverseWords()">Reverse Words</button>
+                <button class="btn" onclick="sortWordsByLength()">Sort Words by Length</button>
+                <button class="btn" onclick="countConsonants()">Count Consonants</button>
+                <button class="btn" onclick="findLongestSentence()">Find Longest Sentence</button>
+                <button class="btn" onclick="findShortestSentence()">Find Shortest Sentence</button>
+                <button class="btn" onclick="swapCase()">Swap Case</button>
+                <button class="btn" onclick="highlightConsonants()">Highlight Consonants</button>
+                <button class="btn" onclick="extractNumbers()">Extract Numbers</button>
+                <button class="btn" onclick="clearText()">Clear Text</button>
+                <button class="btn" onclick="capitalizeWords()">Capitalize Words</button>
+                <button class="btn" onclick="replaceVowels()">Replace Vowels with *</button>
+                <button class="btn" onclick="removePunctuation()">Remove Punctuation</button>
+                <button class="btn" onclick="findLongestWord()">Find Longest Word</button>
+                <button class="btn" onclick="findShortestWord()">Find Shortest Word</button>
+                <button class="btn" onclick="countUniqueWords()">Count Unique Words</button>
+                <button class="btn" onclick="shuffleText()">Shuffle Text</button>
+                <button class="btn" onclick="removeNumbers()">Remove Numbers</button>
+                <button class="btn" onclick="countVowels()">Count Vowels</button>
+                <button class="btn" onclick="convertToCamelCase()">Convert to Camel Case</button>
+                <button class="btn" onclick="reverseSentenceOrder()">Reverse Sentence Order</button>
+                <button class="btn" onclick="replaceSpacesWithDashes()">Replace Spaces with Dashes</button>
+                <button class="btn" onclick="countSpecialCharacters()">Count Special Characters</button>
+                <button class="btn" onclick="findMostFrequentWord()">Find Most Frequent Word</button>
+                <button class="btn" onclick="findLeastFrequentWord()">Find Least Frequent Word</button>
+                <button class="btn" onclick="capitalizeFirstLetterOfEachSentence()">Capitalize First Letter of Each
+                  Sentence</button>
+                <button class="btn" onclick="reverseEachWord()">Reverse Each Word</button>
+                <button class="btn" onclick="highlightNumbers()">Highlight Numbers</button>
+                <button class="btn" onclick="removeDuplicates()">Remove Duplicate Words</button>
+               </div>
+
+
+  </div>
+
+  <script>
+    let buttonIndex = 0;
+    const buttons = document.querySelectorAll('.btn');
+
+    function toggleOptions() {
+      if (buttons[0].style.display === 'none' || !buttons[0].style.display) {
+        // Show the current button
+        buttons[buttonIndex].style.display = 'inline-block';
+        buttonIndex = (buttonIndex + 1) % buttons.length;
+      } else {
+        // Hide all buttons
+        buttons.forEach(btn => btn.style.display = 'none');
+
+        // Show the next button in sequence
+        buttons[buttonIndex].style.display = 'inline-block';
+        buttonIndex = (buttonIndex + 1) % buttons.length;
+      }
+    }
+
+    // Initially hide all buttons
+    buttons.forEach(btn => btn.style.display = 'none');
+
+    // Define button functions
+    function updateCount() {
+      let text = document.getElementById('input-text').value;
+      document.getElementById('output').innerText = `Character Count: ${text.length}`;
+    }
+
+    function countWords() {
+      let text = document.getElementById('input-text').value;
+      let wordCount = text.trim().split(/\s+/).length;
+      document.getElementById('output').innerText = `Word Count: ${wordCount}`;
+    }
+
+    function countSentences() {
+      let text = document.getElementById('input-text').value;
+      let sentenceCount = text.split(/[.!?]/).filter(Boolean).length;
+      document.getElementById('output').innerText = `Sentence Count: ${sentenceCount}`;
+    }
+
+    function countParagraphs() {
+      let text = document.getElementById('input-text').value;
+      let paragraphCount = text.split(/\n\n/).filter(Boolean).length;
+      document.getElementById('output').innerText = `Paragraph Count: ${paragraphCount}`;
+    }
+
+    function analyzeFrequency() {
+      let text = document.getElementById('input-text').value;
+      let frequency = {};
+      for (let char of text) {
+        frequency[char] = (frequency[char] || 0) + 1;
+      }
+      document.getElementById('output').innerText = `Character Frequency: ${JSON.stringify(frequency, null, 2)}`;
+    }
+
+    function convertToUppercase() {
+      let text = document.getElementById('input-text').value.toUpperCase();
+      document.getElementById('output').innerText = text;
+    }
+
+    function convertToLowercase() {
+      let text = document.getElementById('input-text').value.toLowerCase();
+      document.getElementById('output').innerText = text;
+    }
+
+    function reverseText() {
+      let text = document.getElementById('input-text').value;
+      let reversedText = text.split('').reverse().join('');
+      document.getElementById('output').innerText = reversedText;
+    }
+
+    function sortAlphabetically() {
+      let text = document.getElementById('input-text').value;
+      let sortedText = text.split(/\s+/).sort().join(' ');
+      document.getElementById('output').innerText = sortedText;
+    }
+
+    function highlightVowels() {
+      let text = document.getElementById('input-text').value;
+      let highlightedText = text.replace(/[aeiou]/gi, match => `<span style="color: red;">${match}</span>`);
+      document.getElementById('output').innerHTML = highlightedText;
+    }
+
+    function removeExtraSpaces() {
+      let text = document.getElementById('input-text').value;
+      let cleanedText = text.replace(/\s+/g, ' ').trim();
+      document.getElementById('output').innerText = cleanedText;
+    }
+
+    function convertToTitleCase() {
+      let text = document.getElementById('input-text').value;
+      let titleCaseText = text.replace(/\b\w/g, char => char.toUpperCase());
+      document.getElementById('output').innerText = titleCaseText;
+    }
+
+    function removeVowels() {
+      let text = document.getElementById('input-text').value;
+      let noVowelsText = text.replace(/[aeiou]/gi, '');
+      document.getElementById('output').innerText = noVowelsText;
+    }
+
+    function reverseWords() {
+      let text = document.getElementById('input-text').value;
+      let reversedWordsText = text.split(' ').reverse().join(' ');
+      document.getElementById('output').innerText = reversedWordsText;
+    }
+
+    function sortWordsByLength() {
+      let text = document.getElementById('input-text').value;
+      let sortedWords = text.split(/\s+/).sort((a, b) => a.length - b.length).join(' ');
+      document.getElementById('output').innerText = sortedWords;
+    }
+
+    function countConsonants() {
+      let text = document.getElementById('input-text').value;
+      let consonantCount = (text.match(/[^aeiou\s]/gi) || []).length;
+      document.getElementById('output').innerText = `Consonant Count: ${consonantCount}`;
+    }
+
+    function findLongestSentence() {
+      let text = document.getElementById('input-text').value;
+      let sentences = text.split(/[.!?]/).filter(Boolean);
+      let longestSentence = sentences.reduce((longest, current) => current.length > longest.length ? current : longest, '');
+      document.getElementById('output').innerText = `Longest Sentence: ${longestSentence.trim()}`;
+    }
+
+    function findShortestSentence() {
+      let text = document.getElementById('input-text').value;
+      let sentences = text.split(/[.!?]/).filter(Boolean);
+      let shortestSentence = sentences.reduce((shortest, current) => current.length < shortest.length ? current : shortest, sentences[0]);
+      document.getElementById('output').innerText = `Shortest Sentence: ${shortestSentence.trim()}`;
+    }
+
+    function swapCase() {
+      let text = document.getElementById('input-text').value;
+      let swappedText = text.split('').map(char => {
+        if (char === char.toUpperCase()) return char.toLowerCase();
+        if (char === char.toLowerCase()) return char.toUpperCase();
+        return char;
+      }).join('');
+      document.getElementById('output').innerText = swappedText;
+    }
+
+    function highlightConsonants() {
+      let text = document.getElementById('input-text').value;
+      let highlightedText = text.replace(/[^aeiou\s]/gi, match => `<span style="color: blue;">${match}</span>`);
+      document.getElementById('output').innerHTML = highlightedText;
+    }
+
+    function extractNumbers() {
+      let text = document.getElementById('input-text').value;
+      let numbers = text.match(/\d+/g) || [];
+      document.getElementById('output').innerText = `Numbers: ${numbers.join(', ')}`;
+    }
+
+    function clearText() {
+      document.getElementById('input-text').value = '';
+      document.getElementById('output').innerText = '';
+    }
+
+    function capitalizeWords() {
+      let text = document.getElementById('input-text').value;
+      let capitalizedText = text.replace(/\b\w/g, char => char.toUpperCase());
+      document.getElementById('output').innerText = capitalizedText;
+    }
+
+    function replaceVowels() {
+      let text = document.getElementById('input-text').value;
+      let replacedText = text.replace(/[aeiou]/gi, '*');
+      document.getElementById('output').innerText = replacedText;
+    }
+
+    function removePunctuation() {
+      let text = document.getElementById('input-text').value;
+      let noPunctuationText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+      document.getElementById('output').innerText = noPunctuationText;
+    }
+
+    function findLongestWord() {
+      let text = document.getElementById('input-text').value;
+      let words = text.split(/\s+/);
+      let longestWord = words.reduce((longest, current) => current.length > longest.length ? current : longest, '');
+      document.getElementById('output').innerText = `Longest Word: ${longestWord}`;
+    }
+
+    function findShortestWord() {
+      let text = document.getElementById('input-text').value;
+      let words = text.split(/\s+/);
+      let shortestWord = words.reduce((shortest, current) => current.length < shortest.length ? current : shortest, words[0]);
+      document.getElementById('output').innerText = `Shortest Word: ${shortestWord}`;
+    }
+
+    function countUniqueWords() {
+      let text = document.getElementById('input-text').value;
+      let words = text.trim().split(/\s+/);
+      let uniqueWords = new Set(words);
+      document.getElementById('output').innerText = `Unique Words: ${uniqueWords.size}`;
+    }
+
+    function shuffleText() {
+      let text = document.getElementById('input-text').value;
+      let shuffledText = text.split('').sort(() => Math.random() - 0.5).join('');
+      document.getElementById('output').innerText = shuffledText;
+    }
+
+    function removeNumbers() {
+      let text = document.getElementById('input-text').value;
+      let noNumbersText = text.replace(/\d+/g, '');
+      document.getElementById('output').innerText = noNumbersText;
+    }
+
+    function countVowels() {
+      let text = document.getElementById('input-text').value;
+      let vowelCount = (text.match(/[aeiou]/gi) || []).length;
+      document.getElementById('output').innerText = `Vowel Count: ${vowelCount}`;
+    }
+
+    function convertToSentenceCase() {
+      let text = document.getElementById('input-text').value;
+      let sentenceCaseText = text.toLowerCase().replace(/(^\s*\w|[\.\!\?\]\s]\w)/g, match => match.toUpperCase());
+      document.getElementById('output').innerText = sentenceCaseText;
+    }
+
+    // Add event listeners to buttons
+    document.querySelector('#btn-count').addEventListener('click', updateCount);
+    document.querySelector('#btn-words').addEventListener('click', countWords);
+    document.querySelector('#btn-sentences').addEventListener('click', countSentences);
+    document.querySelector('#btn-paragraphs').addEventListener('click', countParagraphs);
+    document.querySelector('#btn-frequency').addEventListener('click', analyzeFrequency);
+    document.querySelector('#btn-uppercase').addEventListener('click', convertToUppercase);
+    document.querySelector('#btn-lowercase').addEventListener('click', convertToLowercase);
+    document.querySelector('#btn-reverse').addEventListener('click', reverseText);
+    document.querySelector('#btn-sort').addEventListener('click', sortAlphabetically);
+    document.querySelector('#btn-highlight-vowels').addEventListener('click', highlightVowels);
+    document.querySelector('#btn-remove-spaces').addEventListener('click', removeExtraSpaces);
+    document.querySelector('#btn-title-case').addEventListener('click', convertToTitleCase);
+    document.querySelector('#btn-remove-vowels').addEventListener('click', removeVowels);
+    document.querySelector('#btn-reverse-words').addEventListener('click', reverseWords);
+    document.querySelector('#btn-sort-words').addEventListener('click', sortWordsByLength);
+    document.querySelector('#btn-consonants').addEventListener('click', countConsonants);
+    document.querySelector('#btn-longest-sentence').addEventListener('click', findLongestSentence);
+    document.querySelector('#btn-shortest-sentence').addEventListener('click', findShortestSentence);
+    document.querySelector('#btn-swap-case').addEventListener('click', swapCase);
+    document.querySelector('#btn-highlight-consonants').addEventListener('click', highlightConsonants);
+    document.querySelector('#btn-extract-numbers').addEventListener('click', extractNumbers);
+    document.querySelector('#btn-clear').addEventListener('click', clearText);
+    document.querySelector('#btn-capitalize-words').addEventListener('click', capitalizeWords);
+    document.querySelector('#btn-replace-vowels').addEventListener('click', replaceVowels);
+    document.querySelector('#btn-remove-punctuation').addEventListener('click', removePunctuation);
+    document.querySelector('#btn-longest-word').addEventListener('click', findLongestWord);
+    document.querySelector('#btn-shortest-word').addEventListener('click', findShortestWord);
+    document.querySelector('#btn-unique-words').addEventListener('click', countUniqueWords);
+    document.querySelector('#btn-shuffle').addEventListener('click', shuffleText);
+    document.querySelector('#btn-remove-numbers').addEventListener('click', removeNumbers);
+    document.querySelector('#btn-count-vowels').addEventListener('click', countVowels);
+    document.querySelector('#btn-sentence-case').addEventListener('click', convertToSentenceCase);
+
+    // Button to toggle visibility
+    document.querySelector('.toggle-btn').addEventListener('click', toggleOptions);
+
+  </script>
+</body>
+
+</html>
